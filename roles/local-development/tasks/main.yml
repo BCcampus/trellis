@@ -1,0 +1,23 @@
+- name: Commons-in-a-box install
+  command: wp plugin install commons-in-a-box --activate
+  args:
+    chdir: "{{ www_root }}/{{ item.key }}/{{ item.value.current_path | default('current') }}/"
+  with_dict: "{{ wordpress_sites }}"
+  become: true
+  become_user: "{{ web_user }}"
+- name: Events Manager install
+  command: wp plugin install events-manager --activate
+  args:
+    chdir: "{{ www_root }}/{{ item.key }}/{{ item.value.current_path | default('current') }}/"
+  with_dict: "{{ wordpress_sites }}"
+  become: true
+  become_user: "{{ web_user }}"
+- name: Enable plugins
+  include_tasks: plugins-activate.yml
+  with_items:
+    - custom-wp-notify
+    - validate-by-domain
+    - excel-export
+    - custom-rest-routes
+  loop_control:
+    loop_var: plugin

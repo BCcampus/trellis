@@ -1,0 +1,7 @@
+- name: Activate plugins
+  command: wp plugin activate {{ plugin }}
+  args:
+    chdir: "{{ www_root }}/{{ item.key }}/{{ item.value.current_path | default('current') }}/"
+  with_dict: "{{ wordpress_sites }}"
+  become: true
+  become_user: "{{ web_user }}"
