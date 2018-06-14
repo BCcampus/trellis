@@ -21,6 +21,10 @@
     - custom-rest-routes
   loop_control:
     loop_var: plugin
+- name: Install Subversion
+  apt:
+    name: subversion
+    state: present
 - name: Create unit testing database
   mysql_db:
     name: tlpd_tests
