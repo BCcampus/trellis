@@ -21,3 +21,18 @@
     - custom-rest-routes
   loop_control:
     loop_var: plugin
+- name: Create unit testing database
+  mysql_db:
+    name: tlpd_tests
+    state: present
+- name: Create/assign unit testing database user to db and grant permissions
+  mysql_user:
+    name: tlpd_test
+    password: ''
+    append_privs: yes
+    priv: "tlpd_tests.*:ALL"
+    state: present
+    login_host: "{{ site_env.db_host }}"
+    login_user: "{{ mysql_root_user }}"
+    login_password: "{{ mysql_root_password }}"
+  with_dict: "{{ wordpress_sites }}"
