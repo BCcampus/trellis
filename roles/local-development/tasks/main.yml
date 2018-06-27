@@ -27,14 +27,14 @@
     state: present
 - name: Create unit testing database
   mysql_db:
-    name: tlpd_tests
+    name: pd_tests
     state: present
 - name: Create/assign unit testing database user to db and grant permissions
   mysql_user:
-    name: tlpd_test
+    name: pd_test
     password: ''
     append_privs: yes
-    priv: "tlpd_tests.*:ALL"
+    priv: "pd_tests.*:ALL"
     state: present
     login_host: "{{ site_env.db_host }}"
     login_user: "{{ mysql_root_user }}"
